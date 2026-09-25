@@ -8,7 +8,7 @@ const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfa
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://wanderlux.example"),
+  metadataBase: new URL("https://wander-lux-beta.vercel.app"),
   title: { template: "%s | WanderLux Travel", default: "WanderLux Travel — Find your somewhere" },
   description: "Thoughtful, tailor-made holiday packages to the world's most memorable places. Find your somewhere with WanderLux Travel.",
   keywords: ["holiday packages", "tailor-made travel", "luxury travel", "travel destinations", "WanderLux"],

@@ -2,7 +2,7 @@
 
 Thoughtful journeys, shaped around you. A responsive marketing site for a fictional tailor-made travel company.
 
-**Live demo:** Not deployed yet. Deploy the repository to Vercel using the steps below.
+**Live demo:** https://wander-lux-beta.vercel.app
 
 ## Why This Stack
 
@@ -41,7 +41,7 @@ Next.js App Router suits this content-first marketing site: its pages render as 
 Prerequisites: Node.js 20.9 or later and npm.
 
 ```bash
-git clone <your-repository-url>
+git clone https://github.com/Sonudhukia143/wanderLux.git
 cd frontend-assignement
 npm install
 npm run dev
