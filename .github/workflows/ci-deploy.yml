@@ -91,7 +91,7 @@ jobs:
     name: Deploy Vercel production
     needs: quality
     # Only main is promoted to the production Vercel deployment.
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
     runs-on: ubuntu-latest
     timeout-minutes: 15
     environment: Production
