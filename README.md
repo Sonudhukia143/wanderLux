@@ -17,9 +17,10 @@ Next.js App Router suits this content-first marketing site: its pages render as 
 
 ## Features
 
-- Full-height destination hero, responsive navigation, story, travel benefits, packages, contact form, and footer.
-- Six typed holiday packages rendered with a reusable destination card.
-- Mobile navigation menu and scroll-aware navbar styling.
+- Full-height destination hero with layered scenic imagery, CTA buttons, and a scroll-indicator to the story section.
+- Responsive navigation with a fixed scroll-aware header and mobile menu.
+- Story, travel benefits, curated package grid, and contact form sections with a cohesive editorial brand aesthetic.
+- Six typed holiday packages rendered with a reusable destination card, each including destination details, pricing, and traveler review metadata.
 - Contact form with required fields, inline validation, loading feedback, and confirmation state. Submission is a frontend demo and does not send email.
 - Responsive layouts, keyboard focus treatment, semantic page structure, and descriptive image text.
 - Page metadata, Open Graph details, and image optimization configuration.
