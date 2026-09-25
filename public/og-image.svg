@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#1B6CA8"/><stop offset="1" stop-color="#0D3B4E"/></linearGradient>
+    <linearGradient id="sun" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#F5A623"/><stop offset="1" stop-color="#F5A623" stop-opacity="0"/></linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#sky)"/>
+  <circle cx="920" cy="210" r="125" fill="url(#sun)" opacity=".9"/>
+  <path d="M0 455 260 250l180 170 170-215 260 250 135-155 195 180v150H0Z" fill="#0A3040" opacity=".8"/>
+  <path d="m0 510 250-165 220 150 245-200 245 200 115-90 125 85v140H0Z" fill="#0D3B4E"/>
+  <g fill="none" stroke="#F5A623" stroke-width="5"><circle cx="107" cy="104" r="36"/><path d="m117 92-9 27-27 9 9-27 27-9Z" fill="#F5A623"/></g>
+  <text x="164" y="115" fill="#fff" font-family="Georgia,serif" font-size="42" font-weight="bold">WanderLux</text>
+  <text x="100" y="360" fill="#fff" font-family="Georgia,serif" font-size="78" font-weight="bold">Find your somewhere.</text>
+  <text x="105" y="413" fill="#ffffff" fill-opacity=".78" font-family="Arial,sans-serif" font-size="25">Thoughtful journeys, shaped around you.</text>
+</svg>

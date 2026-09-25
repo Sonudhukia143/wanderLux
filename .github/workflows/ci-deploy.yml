@@ -1,0 +1,123 @@
+name: CI and Vercel Deploy
+
+on:
+  push:
+    branches:
+      - "**"
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# One deployment per branch at a time. A newer commit cancels an older run.
+concurrency:
+  group: wanderlux-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: 20
+
+jobs:
+  quality:
+    name: Quality checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check TypeScript
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Run tests
+        run: npm test -- --maxWorkers=1
+
+      - name: Create production build
+        run: npm run build
+
+  deploy-preview:
+    name: Deploy Vercel preview
+    needs: quality
+    # Pull requests are verified but do not receive credentials. Each pushed
+    # non-main branch receives a Vercel preview only after quality passes.
+    if: github.event_name == 'push' && github.ref != 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: Preview
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Pull Vercel preview settings
+        run: npx --yes vercel@60.0.1 pull --yes --environment=preview --token="$VERCEL_TOKEN"
+
+      - name: Build Vercel preview
+        run: npx --yes vercel@60.0.1 build --token="$VERCEL_TOKEN"
+
+      - name: Deploy Vercel preview
+        run: npx --yes vercel@60.0.1 deploy --prebuilt --token="$VERCEL_TOKEN"
+
+  deploy-production:
+    name: Deploy Vercel production
+    needs: quality
+    # Only main is promoted to the production Vercel deployment.
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: Production
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Pull Vercel production settings
+        run: npx --yes vercel@60.0.1 pull --yes --environment=production --token="$VERCEL_TOKEN"
+
+      - name: Build Vercel production
+        run: npx --yes vercel@60.0.1 build --prod --token="$VERCEL_TOKEN"
+
+      - name: Deploy Vercel production
+        run: npx --yes vercel@60.0.1 deploy --prebuilt --prod --token="$VERCEL_TOKEN"
